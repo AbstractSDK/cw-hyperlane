@@ -10,6 +10,8 @@
 
 - Recommanded to use same account for both networks
 
+  - You can get private key for cosmos and ethereum by running make private-key command
+    `make private-key mnemonic=[mnemonic]`
   - You can easily get the bech32 address by running below command (need to setup `config.yaml` first)
 
     - Get from private key
@@ -94,6 +96,8 @@ deploy:
             denom: uosmo
             amount: 1
 ```
+
+Note: yarn scripts expects at least 1 merkle(commonly default) and 1 igp hook
 
 ## 2. Upload Contract Codes
 

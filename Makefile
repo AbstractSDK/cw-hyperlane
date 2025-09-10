@@ -34,5 +34,16 @@ build: optimize-fast check
 	cargo build
 	cargo wasm
 
+private-key:
+	@if [ -z "$(mnemonic)" ]; then \
+		echo "Please provide a mnemonic phrase: make private-key mnemonic=\"...\""; \
+		exit 1; \
+	fi
+	@echo "$(mnemonic)"
+	@echo "evm_private_key:"
+	@cast wallet private-key "$(mnemonic)"
+	@echo "\ncosmos_private_key:"
+	@cast wallet private-key --mnemonic-derivation-path "m/44'/118'/0'/0/0" "$(mnemonic)"
+
 ci-build: optimize check
 	zip -jr wasm_codes.zip artifacts
