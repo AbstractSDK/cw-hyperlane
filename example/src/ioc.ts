@@ -12,7 +12,7 @@ import {
   http,
 } from 'viem';
 import { mnemonicToAccount, privateKeyToAccount } from 'viem/accounts';
-import { sepolia } from 'viem/chains';
+import { celoAlfajores } from 'viem/chains';
 
 export class Dependencies {
   account: Account;
@@ -42,11 +42,11 @@ export async function injectDependencies(cmd: Command): Promise<void> {
 
   const provider = {
     query: createPublicClient({
-      chain: sepolia,
+      chain: celoAlfajores,
       transport: http(endpoint),
     }),
     exec: createWalletClient({
-      chain: sepolia,
+      chain: celoAlfajores,
       account,
       transport: http(endpoint),
     }),

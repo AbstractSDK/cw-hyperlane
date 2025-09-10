@@ -1,0 +1,71 @@
+{
+  "artifacts": {
+    "hpl_mailbox": 1539,
+    "hpl_validator_announce": 1540,
+    "hpl_ism_aggregate": 1541,
+    "hpl_ism_multisig": 1542,
+    "hpl_ism_pausable": 1543,
+    "hpl_ism_routing": 1544,
+    "hpl_igp": 1545,
+    "hpl_hook_aggregate": 1546,
+    "hpl_hook_fee": 1547,
+    "hpl_hook_merkle": 1548,
+    "hpl_hook_pausable": 1549,
+    "hpl_hook_routing": 1550,
+    "hpl_hook_routing_custom": 1551,
+    "hpl_hook_routing_fallback": 1552,
+    "hpl_test_mock_hook": 1553,
+    "hpl_test_mock_ism": 1554,
+    "hpl_test_mock_msg_receiver": 1555,
+    "hpl_igp_oracle": 1556,
+    "hpl_warp_cw20": 1557,
+    "hpl_warp_native": 1558
+  },
+  "deployments": {
+    "core": {
+      "mailbox": {
+        "type": "hpl_mailbox",
+        "address": "xion12cd6ljawlluc9ppea030rhdtuje3rwzncaq2t2r2k0t82d3ep45qktzmtn",
+        "hexed": "0x561bafcbaefff9828439ebe2f1ddabe4b311b853c740a5a86ab3d67536390d68"
+      },
+      "validator_announce": {
+        "type": "hpl_validator_announce",
+        "address": "xion1k4qc2fnc4p7w90a2drtxmxfq7m77taqqpvlsg0wrsxs50n0vx9rs66tulz",
+        "hexed": "0xb541852678a87ce2bfaa68d66d9920f6fde5f4000b3f043dc381a147cdec3147"
+      }
+    },
+    "isms": {
+      "type": "hpl_ism_multisig",
+      "address": "xion17prxd5hww9eprzgaznpy808xclea8reehpydzx957srk3f33dhaqthpwcu",
+      "hexed": "0xf04666d2ee717211891d14c243bce6c7f3d38f39b848d118b4f40768a6316dfa"
+    },
+    "hooks": {
+      "default": {
+        "type": "hpl_hook_merkle",
+        "address": "xion122psejz89pc58mr4tf6enw455vhlv9wnzygtl3uqm2wdatv649tsr679ud",
+        "hexed": "0x52830cc847287143ec755a7599bab4a32ff615d31110bfc780da9cdead9aa957"
+      },
+      "required": {
+        "type": "hpl_igp",
+        "address": "xion189yshnppqss2mv630sfk0dpd9s66vm35mud5ses4klchsc0tl85qj2n67n",
+        "hexed": "0x39490bcc210420adb3517c1367b42d2c35a66e34df1b486615b7f17861ebf9e8",
+        "oracle": {
+          "type": "hpl_igp_oracle",
+          "address": "xion1dg7v2h5ha9j4lh3f798z2jm4537swaahst6ve9q2g4jh5j0llmms3plsks",
+          "hexed": "0x6a3cc55e97e9655fde29f14e254b75a47d0777b782f4cc940a45657a49fffef7"
+        }
+      }
+    },
+    "warp": {
+      "native": [],
+      "cw20": []
+    },
+    "test": {
+      "msg_receiver": {
+        "type": "hpl_test_mock_msg_receiver",
+        "address": "xion1rnkxxpw8mmf77tn6tq2v2fs2kr6sp2a6sd6wept667cehpykvsfs6d7aqj",
+        "hexed": "0x1cec6305c7ded3ef2e7a5814c5260ab0f500abba8374ec857ad7b19b84966413"
+      }
+    }
+  }
+}

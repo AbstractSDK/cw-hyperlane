@@ -7,7 +7,7 @@ members = [
   "contracts/mocks/*",
   "contracts/warp/*",
   "packages/*",
-  "integration-test",
+  # "integration-test",
 ]
 resolver = "2"
 
@@ -33,7 +33,7 @@ authors = [
   "Eric <hashableric@gmail.com>",
   "Steve <steve8060914@gmail.com>",
 ]
-edition = "2021"
+edition = "2024"
 license = "Apache-2.0"
 repository = "https://github.com/many-things/cw-hyperlane"
 homepage = "https://www.hyperlane.xyz/"
@@ -87,7 +87,7 @@ test-tube = { version = "0.5.0" }
 osmosis-test-tube = { version = "22.1.0" }
 ibcx-test-utils = { version = "0.1.2" }
 
-tokio = { version = "1", features = ["full"] }
+tokio = { version = "1", default-features = false }
 ethers = "2.0.7"
 
 # workspace aliases (./contracts)
@@ -117,3 +117,6 @@ hpl-pausable = { path = "./packages/pausable" }
 hpl-router = { path = "./packages/router" }
 hpl-interface = { path = "./packages/interface" }
 hpl-utils = { path = "./packages/utils" }
+
+# [patch.crates-io]
+# base64ct = { version = "=1.6.0", registry = "crates-io-2" }

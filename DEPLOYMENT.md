@@ -12,16 +12,16 @@
 
   - You can easily get the bech32 address by running below command (need to setup `config.yaml` first)
 
-    - Get from private key  
+    - Get from private key
       `yarn cw-hpl wallet address -n [network-id] --private-key [private-key]`
-    - Get from mnemonic phrase  
+    - Get from mnemonic phrase
       `yarn cw-hpl wallet address -n [network-id] --mnemonic [mnemonic]`
 
   - You also can get the ethereum address by running below command
 
-    - Get from private key  
+    - Get from private key
       `cast wallet address --private-key [private-key]`
-    - Get from mnemonic phrase  
+    - Get from mnemonic phrase
       `cast wallet address --mnemonic [mnemonic]`
 
   - Or, You can use `yarn cw-hpl wallet new -n [network-id]` to create new wallet
@@ -38,6 +38,7 @@ You can check full list of example in [config.example.yaml](../config.example.ya
 networks:
   - id: 'osmo-test-5'
     hrp: 'osmo'
+    signer: '<private-key>'
     endpoint:
       rpc: 'https://rpc.testnet.osmosis.zone'
       rest: 'https://lcd.testnet.osmosis.zone'
@@ -49,12 +50,11 @@ networks:
     # It's very arbitrary value, Perhaps you must need to change this value.
     domain: 1037 # osmo-test-5 -> ascii / decimal -> sum
 
-signer: '<private-key> or <mnemonic>'
-
 deploy:
   ism:
     type: routing
     owner: <signer>
+    signer: '<private-key>'
     isms:
       - type: multisig
         owner: <signer>
@@ -193,10 +193,10 @@ yarn cw-hpl-exp deploy-test-recipient --pk 'YOUR_PRIVATE_KEY'
 ```bash
 # Below address is mailbox came from agent-config.docker.json
 cast send \
-    0xfFAEF09B3cd11D9b20d1a19bECca54EEC2884766 --value 1wei \
+    --rpc-url 'https://rpc.sepolia.org' \
+    0xEf9F292fcEBC3848bF4bB92a96a04F9ECBb78E59 --value 1wei \
     'dispatch(uint32,bytes32,bytes)' \
     1037 $OSMOSIS_TESTNET_TEST_RECIPIENT_ADDRESS 0x68656c6c6f \ # 0x68656c6c6f -> 'hello'
-    --rpc-url 'https://rpc.sepolia.org' \
     --private-key $SEPOLIA_PRIVATE_KEY
 ```
 

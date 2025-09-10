@@ -21,7 +21,7 @@ library = []
 [dependencies]
 cosmwasm-std.workspace = true
 
-[dev_dependencies]
+[dev-dependencies]
 ethers.workspace = true
 test-tube.workspace = true
 osmosis-test-tube.workspace = true
