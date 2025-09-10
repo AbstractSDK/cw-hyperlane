@@ -6,6 +6,7 @@ members = [
   "contracts/isms/*",
   "contracts/mocks/*",
   "contracts/warp/*",
+  "contracts/receivers/*",
   "packages/*",
   # "integration-test",
 ]

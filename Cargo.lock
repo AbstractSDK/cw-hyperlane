@@ -1376,6 +1376,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "hpl-self-xyz-verifier"
+version = "0.0.7"
+dependencies = [
+ "cosmwasm-schema",
+ "cosmwasm-std",
+ "cosmwasm-storage",
+ "cw-multi-test",
+ "cw-storage-plus",
+ "cw2",
+ "hex",
+ "hpl-interface",
+ "hpl-utils",
+ "schemars",
+ "serde",
+ "thiserror",
+]
+
+[[package]]
 name = "hpl-test-mock-hook"
 version = "0.0.7"
 dependencies = [

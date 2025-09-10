@@ -1,6 +1,6 @@
 # Hyperlane Configuration Reference
 
-This document provides a reference for the `deploy` section of your `config.yaml`, specifically for configuring Interchain Security Modules (ISMs) and Hooks.
+This document provides a reference for the `deploy` section of `config.yaml`, specifically for configuring Interchain Security Modules (ISMs) and Hooks.
 
 ## Interchain Security Modules (ISMs)
 
