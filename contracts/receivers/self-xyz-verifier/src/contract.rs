@@ -1,8 +1,9 @@
+use alloy::sol_types::SolValue;
 #[cfg(not(feature = "library"))]
 use cosmwasm_std::entry_point;
 use cosmwasm_std::{
-    Deps, DepsMut, Empty, Env, MessageInfo, QueryResponse, Response, StdResult, ensure_eq,
-    from_json, to_json_binary,
+    CanonicalAddr, Deps, DepsMut, Empty, Env, MessageInfo, QueryResponse, Response, StdResult,
+    ensure_eq, to_json_binary,
 };
 use cw2::set_contract_version;
 use hex;
@@ -11,8 +12,8 @@ use hpl_interface::core::ExpectedHandleMsg;
 use crate::{
     CONTRACT_NAME, CONTRACT_VERSION,
     error::ContractError,
-    msg::{ExecuteMsg, InstantiateMsg, QueryMsg, VerificationMsg, VerificationResponse},
-    state::{MAILBOX, VERIFICATIONS},
+    msg::{ExecuteMsg, InstantiateMsg, QueryMsg, VerificationResponse},
+    state::{GenericDiscloseOutputV2, MAILBOX, VERIFICATIONS},
 };
 
 #[cfg_attr(not(feature = "library"), entry_point)]
@@ -46,23 +47,30 @@ pub fn execute(
                     mailbox: mailbox.into_string()
                 }
             );
+
+            type DecodedTuple = (
+                crate::bind::GenericDiscloseOutputV2,
+                alloy::primitives::Bytes,
+            );
+            let (disclose, cosmos_address_bytes) = DecodedTuple::abi_decode(&msg.body, true)
+                .map_err(|_| ContractError::SelfDecodeFailure {})?;
             // TODO:
-            // 1. body won't be json, need to use evm bind for the contract
-            // 2. msg.sender should be saved address of an evm contract, configured at instantiation
-            let verification_msg: VerificationMsg = from_json(&msg.body)?;
+            // 1. msg.sender should be saved address of an evm contract, configured at instantiation
 
-            let cosmos_address = deps.api.addr_validate(&verification_msg.cosmos_address)?;
-            let evm_address = verification_msg.evm_address;
+            let canon_addr = CanonicalAddr::from(cosmos_address_bytes.as_ref());
+            let cosmos_address = deps.api.addr_humanize(&canon_addr)?;
 
-            VERIFICATIONS.save(deps.storage, evm_address.as_slice(), &cosmos_address)?;
+            let verification = GenericDiscloseOutputV2::from(disclose);
+
+            VERIFICATIONS.save(deps.storage, &cosmos_address, &verification)?;
 
             Ok(Response::new().add_attributes(vec![
                 ("action", "verify"),
-                (
-                    "evm_address",
-                    &format!("0x{}", hex::encode(evm_address.as_slice())),
-                ),
                 ("cosmos_address", cosmos_address.as_str()),
+                (
+                    "user_identifier",
+                    hex::encode(&verification.user_identifier.to_be_bytes()).as_str(),
+                ),
             ]))
         }
     }
@@ -71,9 +79,10 @@ pub fn execute(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<QueryResponse> {
     match msg {
-        QueryMsg::Verification { evm_address } => {
-            let address = VERIFICATIONS.may_load(deps.storage, evm_address.as_slice())?;
-            to_json_binary(&VerificationResponse { address })
+        QueryMsg::Verification { address } => {
+            let address = deps.api.addr_validate(&address)?;
+            let verification = VERIFICATIONS.may_load(deps.storage, &address)?;
+            to_json_binary(&VerificationResponse { verification })
         }
         QueryMsg::IsmSpecifier(
             hpl_interface::ism::IsmSpecifierQueryMsg::InterchainSecurityModule(),

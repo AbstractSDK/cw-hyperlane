@@ -1,6 +1,8 @@
 use cosmwasm_schema::{QueryResponses, cw_serde};
-use cosmwasm_std::{Addr, Binary};
+use cosmwasm_std::{Addr, Binary, HexBinary, Uint256};
 use hpl_interface::core::ExpectedHandleMsg;
+
+use crate::state::GenericDiscloseOutputV2;
 
 #[cw_serde]
 pub struct InstantiateMsg {
@@ -10,16 +12,10 @@ pub struct InstantiateMsg {
 pub type ExecuteMsg = ExpectedHandleMsg;
 
 #[cw_serde]
-pub struct VerificationMsg {
-    pub evm_address: Binary,
-    pub cosmos_address: String,
-}
-
-#[cw_serde]
 #[derive(QueryResponses)]
 pub enum QueryMsg {
     #[returns(VerificationResponse)]
-    Verification { evm_address: Binary },
+    Verification { address: String },
 
     // To fulfill hpl-interface ism-specifier query
     #[returns(hpl_interface::ism::InterchainSecurityModuleResponse)]
@@ -28,5 +24,5 @@ pub enum QueryMsg {
 
 #[cw_serde]
 pub struct VerificationResponse {
-    pub address: Option<Addr>,
+    pub verification: Option<GenericDiscloseOutputV2>,
 }

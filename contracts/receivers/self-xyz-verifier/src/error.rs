@@ -8,4 +8,7 @@ pub enum ContractError {
 
     #[error("Sender not a Mailbox({mailbox})")]
     NotMailbox { mailbox: String },
+
+    #[error("Failed to decode Self verification")]
+    SelfDecodeFailure {},
 }

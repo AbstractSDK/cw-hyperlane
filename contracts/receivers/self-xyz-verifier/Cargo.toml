@@ -33,6 +33,7 @@ hpl-interface.workspace = true
 hpl-utils.workspace = true
 
 hex = "0.4"
+alloy = { version = "0.12.6", default-features = false, features = ["sol-types", "dyn-abi"]}
 
 [dev-dependencies]
 serde.workspace = true

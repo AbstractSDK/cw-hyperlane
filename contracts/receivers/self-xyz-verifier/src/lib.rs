@@ -1,3 +1,4 @@
+pub mod bind;
 pub mod contract;
 pub mod error;
 pub mod msg;
