@@ -204,6 +204,16 @@ cast send \
     --private-key $SEPOLIA_PRIVATE_KEY
 ```
 
+```bash
+cast send \
+    --rpc-url 'https://alfajores-forno.celo-testnet.org/' \
+    0xEf9F292fcEBC3848bF4bB92a96a04F9ECBb78E59 --value 1wei \
+    'dispatch(uint32,bytes32,bytes)' \
+    1355 0x5d5378034a1e8f30469f7f32ab187f65a9be51cede9d47504958371464671c4c \ # xion1t4fhsq62r68nq35l0ue2kxrlvk5mu5wwm6w5w5zftqm3ger8r3xq5sw7ce as evm address
+    0x7b2265766d5f61646472657373223a224141414141414141414141414141414141414141414141414141453d222c22636f736d6f735f61646472657373223a2278696f6e31726e6b78787077386d6d663737746e3674713276326673326b723673703261367364367765707436363763656870796b7673667336643761716a227d \ # {"evm_address":"AAAAAAAAAAAAAAAAAAAAAAAAAAE=","cosmos_address":"xion1rnkxxpw8mmf77tn6tq2v2fs2kr6sp2a6sd6wept667cehpykvsfs6d7aqj"}'
+    --private-key $SEPOLIA_PRIVATE_KEY
+```
+
 ### osmo-test-5 -> Sepolia
 
 ```bash

@@ -48,7 +48,7 @@ pub fn execute(
             );
             // TODO:
             // 1. body won't be json, need to use evm bind for the contract
-            // 2. msg.sender should be saved address, can we trust it?
+            // 2. msg.sender should be saved address of an evm contract, configured at instantiation
             let verification_msg: VerificationMsg = from_json(&msg.body)?;
 
             let cosmos_address = deps.api.addr_validate(&verification_msg.cosmos_address)?;

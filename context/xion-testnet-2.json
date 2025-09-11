@@ -19,7 +19,8 @@
     "hpl_test_mock_msg_receiver": 1555,
     "hpl_igp_oracle": 1556,
     "hpl_warp_cw20": 1557,
-    "hpl_warp_native": 1558
+    "hpl_warp_native": 1558,
+    "hpl_self_xyz_verifier": 1563
   },
   "deployments": {
     "core": {
@@ -65,6 +66,11 @@
         "type": "hpl_test_mock_msg_receiver",
         "address": "xion1rnkxxpw8mmf77tn6tq2v2fs2kr6sp2a6sd6wept667cehpykvsfs6d7aqj",
         "hexed": "0x1cec6305c7ded3ef2e7a5814c5260ab0f500abba8374ec857ad7b19b84966413"
+      },
+      "self_xyz_verifier": {
+        "type": "hpl_self_xyz_verifier",
+        "address": "xion1t4fhsq62r68nq35l0ue2kxrlvk5mu5wwm6w5w5zftqm3ger8r3xq5sw7ce",
+        "hexed": "0x5d5378034a1e8f30469f7f32ab187f65a9be51cede9d47504958371464671c4c"
       }
     }
   }
