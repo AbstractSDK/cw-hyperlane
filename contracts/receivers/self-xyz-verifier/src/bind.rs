@@ -1,6 +1,9 @@
-use alloy::sol;
+alloy::sol!(
+    struct DecodedUserData {
+        uint8 action;
+        bytes32 configId;
+    }
 
-sol!(
     struct GenericDiscloseOutputV2 {
         bytes32 attestationId;                    // E_PASSPORT or EU_ID_CARD
         uint256 userIdentifier;                   // User's unique identifier

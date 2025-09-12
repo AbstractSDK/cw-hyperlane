@@ -3,7 +3,16 @@ use cw_storage_plus::{Item, Map};
 
 pub const MAILBOX: Item<Addr> = Item::new("hpl-mailbox");
 // Map<evm_address_bytes, cosmos_address>
-pub const VERIFICATIONS: Map<&Addr, GenericDiscloseOutputV2> = Map::new("verifications");
+pub const VERIFICATIONS: Map<&Addr, (GenericDiscloseOutputV2, UserData)> =
+    Map::new("verifications");
+// Make it Item, if need to deploy to other chains
+pub const CHAIN_BECH_PREFIX: &str = "xion";
+
+#[cosmwasm_schema::cw_serde]
+pub struct UserData {
+    pub action: u8,
+    pub config_id: Uint256,
+}
 
 // Cosmwasm format for https://docs.self.xyz/verification-in-the-identityverificationhub#genericdiscloseoutputv2-verification-result
 #[cosmwasm_schema::cw_serde]

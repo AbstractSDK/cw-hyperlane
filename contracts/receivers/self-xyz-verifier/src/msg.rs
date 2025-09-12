@@ -2,7 +2,7 @@ use cosmwasm_schema::{QueryResponses, cw_serde};
 use cosmwasm_std::{Addr, Binary, HexBinary, Uint256};
 use hpl_interface::core::ExpectedHandleMsg;
 
-use crate::state::GenericDiscloseOutputV2;
+use crate::state::{GenericDiscloseOutputV2, UserData};
 
 #[cw_serde]
 pub struct InstantiateMsg {
@@ -24,5 +24,5 @@ pub enum QueryMsg {
 
 #[cw_serde]
 pub struct VerificationResponse {
-    pub verification: Option<GenericDiscloseOutputV2>,
+    pub verification: Option<(GenericDiscloseOutputV2, UserData)>,
 }

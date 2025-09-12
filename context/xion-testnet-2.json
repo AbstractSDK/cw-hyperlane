@@ -20,7 +20,7 @@
     "hpl_igp_oracle": 1556,
     "hpl_warp_cw20": 1557,
     "hpl_warp_native": 1558,
-    "hpl_self_xyz_verifier": 1563
+    "hpl_self_xyz_verifier": 1569
   },
   "deployments": {
     "core": {
@@ -69,8 +69,8 @@
       },
       "self_xyz_verifier": {
         "type": "hpl_self_xyz_verifier",
-        "address": "xion1t4fhsq62r68nq35l0ue2kxrlvk5mu5wwm6w5w5zftqm3ger8r3xq5sw7ce",
-        "hexed": "0x5d5378034a1e8f30469f7f32ab187f65a9be51cede9d47504958371464671c4c"
+        "address": "xion1xpwle7sm20uz6m9kw62arsk60278jq6m96p79ltc5pcmahptashspjskw4",
+        "hexed": "0x305dfCFa1b53f82d6Cb67695D1c2da7abC79035b2e83e2fD78a071BEDC2Bec2F"
       }
     }
   }

@@ -1,6 +1,6 @@
 [package]
 name = "hpl-self-xyz-verifier"
-version.workspace = true
+version = "0.1.1"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -31,9 +31,12 @@ thiserror.workspace = true
 
 hpl-interface.workspace = true
 hpl-utils.workspace = true
+hpl-ownable.workspace = true
 
 hex = "0.4"
 alloy = { version = "0.12.6", default-features = false, features = ["sol-types", "dyn-abi"]}
+bech32 = "0.11"
+sha2 = "0.10"
 
 [dev-dependencies]
 serde.workspace = true

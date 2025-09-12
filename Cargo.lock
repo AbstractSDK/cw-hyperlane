@@ -238,6 +238,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d86b93f97252c47b41663388e6d155714a9d0c398b99f1005cbc5f978b29f445"
 
 [[package]]
+name = "bech32"
+version = "0.11.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d965446196e3b7decd44aa7ee49e31d630118f90ef12f97900f262eb915c951d"
+
+[[package]]
 name = "bindgen"
 version = "0.69.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -508,7 +514,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "763340055b84e5482ed90fec8194ff7d59112267a09bbf5819c9e3edca8c052e"
 dependencies = [
  "base64",
- "bech32",
+ "bech32 0.9.1",
  "bnum",
  "cosmwasm-crypto",
  "cosmwasm-derive",
@@ -603,7 +609,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cc392a5cb7e778e3f90adbf7faa43c4db7f35b6623224b08886d796718edb875"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-std",
  "cw-storage-plus",
  "cw-utils",
@@ -1165,7 +1171,7 @@ name = "hpl-connection"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1379,7 +1385,7 @@ dependencies = [
 name = "hpl-interface"
 version = "0.0.7"
 dependencies = [
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1403,7 +1409,7 @@ name = "hpl-ism-aggregate"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1423,7 +1429,7 @@ dependencies = [
 name = "hpl-ism-multisig"
 version = "0.0.7"
 dependencies = [
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1469,7 +1475,7 @@ name = "hpl-ism-routing"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1489,7 +1495,7 @@ dependencies = [
 name = "hpl-mailbox"
 version = "0.0.7"
 dependencies = [
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1512,7 +1518,7 @@ name = "hpl-ownable"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1531,7 +1537,7 @@ name = "hpl-pausable"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1551,7 +1557,7 @@ name = "hpl-router"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1577,9 +1583,10 @@ dependencies = [
 
 [[package]]
 name = "hpl-self-xyz-verifier"
-version = "0.0.7"
+version = "0.1.1"
 dependencies = [
  "alloy",
+ "bech32 0.11.0",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1588,9 +1595,11 @@ dependencies = [
  "cw2",
  "hex",
  "hpl-interface",
+ "hpl-ownable",
  "hpl-utils",
  "schemars",
  "serde",
+ "sha2 0.10.9",
  "thiserror",
 ]
 
@@ -1613,7 +1622,7 @@ dependencies = [
 name = "hpl-test-mock-ism"
 version = "0.0.7"
 dependencies = [
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1633,7 +1642,7 @@ dependencies = [
 name = "hpl-test-mock-msg-receiver"
 version = "0.0.7"
 dependencies = [
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1664,7 +1673,7 @@ name = "hpl-validator-announce"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1689,7 +1698,7 @@ name = "hpl-warp-cw20"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1721,7 +1730,7 @@ name = "hpl-warp-native"
 version = "0.0.7"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-schema",
  "cosmwasm-std",
  "cosmwasm-storage",
@@ -1826,7 +1835,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2f1be2c839fdaf6f59a2ad56b611dd61d80e82f8639f768205f344f86a240003"
 dependencies = [
  "anyhow",
- "bech32",
+ "bech32 0.9.1",
  "cosmwasm-std",
  "osmosis-std",
  "osmosis-test-tube",
