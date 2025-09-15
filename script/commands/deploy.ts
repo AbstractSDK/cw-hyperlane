@@ -171,6 +171,9 @@ const deployTest = async (
 ): Promise<ContextDeployments['test']> => {
   const { hrp } = getNetwork(networkId);
 
+  if (!ctx.deployments.core?.mailbox)
+    throw new Error('deployed Mailbox contract not found on context');
+
   const log = (v: string) => console.log('[test]'.green, v);
   const preload = ctx.deployments.test;
   const deployment = preload || {};
@@ -179,6 +182,15 @@ const deployTest = async (
     preload?.msg_receiver ||
     (await deployContract(ctx, client, 'hpl_test_mock_msg_receiver', {
       hrp,
+    }));
+  if (preload?.msg_receiver)
+    log(`${deployment.msg_receiver.type} already deployed`);
+
+  deployment.self_xyz_verifier =
+    preload?.self_xyz_verifier ||
+    (await deployContract(ctx, client, 'hpl_self_xyz_verifier', {
+      mailbox: ctx.deployments.core.mailbox,
+      owner: client.signer,
     }));
   if (preload?.msg_receiver)
     log(`${deployment.msg_receiver.type} already deployed`);
