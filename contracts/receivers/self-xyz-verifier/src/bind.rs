@@ -4,6 +4,11 @@ alloy::sol!(
         bytes32 configId;
     }
 
+    struct VerificationResult {
+        GenericDiscloseOutputV2 output;
+        bytes userDataPayload;
+    }
+
     struct GenericDiscloseOutputV2 {
         bytes32 attestationId;                    // E_PASSPORT or EU_ID_CARD
         uint256 userIdentifier;                   // User's unique identifier

@@ -25,6 +25,7 @@ export const contractNames = [
   'hpl_igp_oracle',
   'hpl_warp_cw20',
   'hpl_warp_native',
+  'hpl_self_xyz_verifier',
 ];
 
 export const REMOTE_REPO_NAME = 'many-things/cw-hyperlane';
