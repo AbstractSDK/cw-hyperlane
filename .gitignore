@@ -43,3 +43,6 @@ node_modules/
 wasm_codes.zip
 
 .yarn/install-state.gz
+
+# Ignore hyperlane deployment (to ensure we don't leak key accidentally)
+example/

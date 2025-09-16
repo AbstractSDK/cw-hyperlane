@@ -26,4 +26,9 @@ pub enum ContractError {
 
     #[error("Payload parse failed: {payload}, expected format '[actionId(1B) | configId(32B)]'")]
     InvalidUserPayload { payload: HexBinary },
+
+    #[error(
+        "Invalid length of the HyperlaneVerification address, expected: 32 bytes long, got: {hyperlane_len}. Fill start with zeroes if needed"
+    )]
+    InvalidHyperlaneLen { hyperlane_len: u32 },
 }

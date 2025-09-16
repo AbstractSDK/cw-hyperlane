@@ -186,12 +186,21 @@ const deployTest = async (
   if (preload?.msg_receiver)
     log(`${deployment.msg_receiver.type} already deployed`);
 
+  const xyz_verifier_init_msg = {
+    mailbox: ctx.deployments.core.mailbox.address,
+    owner: client.signer,
+    hyperlane_verification:
+      '000000000000000000000000dda50543892966c90c7f25ba69ff3cfd3b5084f6',
+  };
+  console.log(xyz_verifier_init_msg);
   deployment.self_xyz_verifier =
     preload?.self_xyz_verifier ||
-    (await deployContract(ctx, client, 'hpl_self_xyz_verifier', {
-      mailbox: ctx.deployments.core.mailbox,
-      owner: client.signer,
-    }));
+    (await deployContract(
+      ctx,
+      client,
+      'hpl_self_xyz_verifier',
+      xyz_verifier_init_msg,
+    ));
   if (preload?.msg_receiver)
     log(`${deployment.msg_receiver.type} already deployed`);
 
