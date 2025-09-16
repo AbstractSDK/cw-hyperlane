@@ -192,7 +192,6 @@ const deployTest = async (
     hyperlane_verification:
       '000000000000000000000000dda50543892966c90c7f25ba69ff3cfd3b5084f6',
   };
-  console.log(xyz_verifier_init_msg);
   deployment.self_xyz_verifier =
     preload?.self_xyz_verifier ||
     (await deployContract(
@@ -200,6 +199,8 @@ const deployTest = async (
       client,
       'hpl_self_xyz_verifier',
       xyz_verifier_init_msg,
+      1000,
+      client.signer,
     ));
   if (preload?.msg_receiver)
     log(`${deployment.msg_receiver.type} already deployed`);

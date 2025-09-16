@@ -16,6 +16,7 @@ export async function deployContract<T extends ContractNames>(
   contractName: T,
   initMsg: object,
   retryAfter = 1000,
+  admin?: string,
 ): Promise<{ type: T; address: string; hexed: string }> {
   const { wasm, stargate, signer } = client;
   logger.debug(`deploying ${contractName}`);
@@ -29,6 +30,7 @@ export async function deployContract<T extends ContractNames>(
       initMsg,
       `cw-hpl: ${contractName}`,
       'auto',
+      { admin },
     );
     const receipt = await waitTx(res.transactionHash, stargate);
     if (receipt.code > 0) {
