@@ -2,12 +2,12 @@
   "db": "/etc/data/db",
   "checkpointSyncer": {
     "type": "localStorage",
-    "path": "/etc/validator/sepolia/checkpoint"
+    "path": "/etc/validator/alfajores/checkpoint"
   },
-  "originChainName": "sepolia",
+  "originChainName": "alfajores",
   "validator": {
     "signerType": "hexKey",
-    "key": "{sepolia_private_key}",
+    "key": "0x{evm_private_key}",
     "type": "hexKey"
   }
 }

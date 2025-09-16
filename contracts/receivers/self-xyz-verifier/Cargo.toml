@@ -1,6 +1,6 @@
 [package]
-name = "hpl-connection"
-version.workspace = true
+name = "hpl-self-xyz-verifier"
+version = "0.1.3"
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -21,20 +21,23 @@ library = []
 [dependencies]
 cosmwasm-std.workspace = true
 cosmwasm-storage.workspace = true
+cosmwasm-schema.workspace = true
+
 cw-storage-plus.workspace = true
 cw2.workspace = true
-bech32.workspace = true
-sha3.workspace = true
-schemars.workspace = true
-serde.workspace = true
-serde-json-wasm.workspace = true
-thiserror.workspace = true
-cosmwasm-schema.workspace = true
-rstest.workspace = true
 
-hpl-ownable.workspace = true
+schemars.workspace = true
+thiserror.workspace = true
+
 hpl-interface.workspace = true
+hpl-utils.workspace = true
+hpl-ownable.workspace = true
+
+hex = "0.4"
+alloy = { version = "0.12.6", default-features = false, features = ["sol-types", "dyn-abi"]}
+bech32 = "0.11"
+sha2 = "0.10"
 
 [dev-dependencies]
-ibcx-test-utils.workspace = true
-anyhow.workspace = true
+serde.workspace = true
+cw-multi-test.workspace = true

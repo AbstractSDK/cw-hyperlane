@@ -60,6 +60,7 @@ export type ContextDeployments = {
 
   test?: {
     msg_receiver?: typed<'hpl_test_mock_msg_receiver'>;
+    self_xyz_verifier?: typed<'hpl_self_xyz_verifier'>;
   };
 };
 

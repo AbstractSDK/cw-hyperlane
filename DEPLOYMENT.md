@@ -10,18 +10,20 @@
 
 - Recommanded to use same account for both networks
 
+  - You can get private key for cosmos and ethereum by running make private-key command
+    `make private-key mnemonic=[mnemonic]`
   - You can easily get the bech32 address by running below command (need to setup `config.yaml` first)
 
-    - Get from private key  
+    - Get from private key
       `yarn cw-hpl wallet address -n [network-id] --private-key [private-key]`
-    - Get from mnemonic phrase  
+    - Get from mnemonic phrase
       `yarn cw-hpl wallet address -n [network-id] --mnemonic [mnemonic]`
 
   - You also can get the ethereum address by running below command
 
-    - Get from private key  
+    - Get from private key
       `cast wallet address --private-key [private-key]`
-    - Get from mnemonic phrase  
+    - Get from mnemonic phrase
       `cast wallet address --mnemonic [mnemonic]`
 
   - Or, You can use `yarn cw-hpl wallet new -n [network-id]` to create new wallet
@@ -38,6 +40,7 @@ You can check full list of example in [config.example.yaml](../config.example.ya
 networks:
   - id: 'osmo-test-5'
     hrp: 'osmo'
+    signer: '<private-key>'
     endpoint:
       rpc: 'https://rpc.testnet.osmosis.zone'
       rest: 'https://lcd.testnet.osmosis.zone'
@@ -49,12 +52,11 @@ networks:
     # It's very arbitrary value, Perhaps you must need to change this value.
     domain: 1037 # osmo-test-5 -> ascii / decimal -> sum
 
-signer: '<private-key> or <mnemonic>'
-
 deploy:
   ism:
     type: routing
     owner: <signer>
+    signer: '<private-key>'
     isms:
       - type: multisig
         owner: <signer>
@@ -94,6 +96,8 @@ deploy:
             denom: uosmo
             amount: 1
 ```
+
+Note: yarn scripts expects at least 1 merkle(commonly default) and 1 igp hook
 
 ## 2. Upload Contract Codes
 
@@ -193,10 +197,20 @@ yarn cw-hpl-exp deploy-test-recipient --pk 'YOUR_PRIVATE_KEY'
 ```bash
 # Below address is mailbox came from agent-config.docker.json
 cast send \
-    0xfFAEF09B3cd11D9b20d1a19bECca54EEC2884766 --value 1wei \
+    --rpc-url 'https://rpc.sepolia.org' \
+    0xEf9F292fcEBC3848bF4bB92a96a04F9ECBb78E59 --value 1wei \
     'dispatch(uint32,bytes32,bytes)' \
     1037 $OSMOSIS_TESTNET_TEST_RECIPIENT_ADDRESS 0x68656c6c6f \ # 0x68656c6c6f -> 'hello'
-    --rpc-url 'https://rpc.sepolia.org' \
+    --private-key $SEPOLIA_PRIVATE_KEY
+```
+
+```bash
+cast send \
+    --rpc-url 'https://alfajores-forno.celo-testnet.org/' \
+    0xEf9F292fcEBC3848bF4bB92a96a04F9ECBb78E59 --value 1wei \
+    'dispatch(uint32,bytes32,bytes)' \
+    1355 0x5d5378034a1e8f30469f7f32ab187f65a9be51cede9d47504958371464671c4c \ # xion1t4fhsq62r68nq35l0ue2kxrlvk5mu5wwm6w5w5zftqm3ger8r3xq5sw7ce as evm address
+    0x7b2265766d5f61646472657373223a224141414141414141414141414141414141414141414141414141453d222c22636f736d6f735f61646472657373223a2278696f6e31726e6b78787077386d6d663737746e3674713276326673326b723673703261367364367765707436363763656870796b7673667336643761716a227d \ # {"evm_address":"AAAAAAAAAAAAAAAAAAAAAAAAAAE=","cosmos_address":"xion1rnkxxpw8mmf77tn6tq2v2fs2kr6sp2a6sd6wept667cehpykvsfs6d7aqj"}'
     --private-key $SEPOLIA_PRIVATE_KEY
 ```
 

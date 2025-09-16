@@ -1,5 +1,4 @@
 import { IndexedTx } from '@cosmjs/stargate';
-import { MsgExecuteContract, MsgInstantiateContract } from '@injectivelabs/sdk-ts';
 
 import { Client } from './config';
 import { contractNames } from './constants';
@@ -17,38 +16,13 @@ export async function deployContract<T extends ContractNames>(
   contractName: T,
   initMsg: object,
   retryAfter = 1000,
+  admin?: string,
 ): Promise<{ type: T; address: string; hexed: string }> {
-  const { wasm, stargate, signer, injective, injective_signer } = client;
+  const { wasm, stargate, signer } = client;
   logger.debug(`deploying ${contractName}`);
 
   try {
     const codeId = ctx.artifacts[contractName];
-
-    const msg = MsgInstantiateContract.fromJSON({
-      sender: injective_signer,
-      admin: injective_signer,
-      codeId: ctx.artifacts[contractName],
-      msg: initMsg,
-      label: `cw-hpl: ${contractName}`,
-    });
-
-    const resp = await injective.broadcast({
-      msgs: msg,
-    });
-
-    const instantiateEvent = resp.events!.find(
-      (event) => event.type === 'cosmwasm.wasm.v1.EventContractInstantiated',
-    );
-
-    const address = JSON.parse(
-      new TextDecoder().decode(instantiateEvent.attributes[2].value),
-    );
-
-    return {
-      type: contractName,
-      address,
-      hexed: extractByte32AddrFromBech32(address),
-    };
 
     const res = await wasm.instantiate(
       signer,
@@ -56,6 +30,7 @@ export async function deployContract<T extends ContractNames>(
       initMsg,
       `cw-hpl: ${contractName}`,
       'auto',
+      { admin },
     );
     const receipt = await waitTx(res.transactionHash, stargate);
     if (receipt.code > 0) {
@@ -110,7 +85,7 @@ export async function executeContract(
 }
 
 export async function executeMultiMsg(
-  { wasm, stargate, signer, injective, injective_signer }: Client,
+  { wasm, stargate, signer }: Client,
   msgs: { contract: { type: ContractNames; address: string }; msg: object }[],
 ): Promise<IndexedTx> {
   const long = msgs
@@ -124,25 +99,6 @@ export async function executeMultiMsg(
       `${Object.keys(v.msg)[0]}${i === arr.length - 1 ? '' : '\n'}`,
     ]),
   );
-
-  let executeMessages = msgs.map((v) => MsgExecuteContract.fromJSON({
-    sender: injective_signer,
-    contractAddress: v.contract.address,
-    msg: v.msg,
-  }));
-
-  // avoid exceeding block gas limit
-  const CHUNK_SIZE = 20;
-  while (executeMessages.length > 0) {
-    const chunk = executeMessages.splice(0, CHUNK_SIZE);
-    const resp = await injective.broadcast({
-      msgs: chunk
-    });
-    console.log({resp});
-  }
-
-  // @ts-ignore
-  return;
 
   const res = await wasm.executeMultiple(
     signer,

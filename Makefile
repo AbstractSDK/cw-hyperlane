@@ -24,7 +24,7 @@ optimize:
 	docker run --rm -v "$(PWD)":/code \
 		--mount type=volume,source="$(BASE)_cache",target=/code/target \
 		--mount type=volume,source=registry_cache,target=/usr/local/cargo/registry \
-		cosmwasm/optimizer:0.15.0
+		cosmwasm/optimizer:0.17.0
 
 optimize-fast:
 	cargo cw-optimizoor
@@ -33,6 +33,17 @@ optimize-fast:
 build: optimize-fast check
 	cargo build
 	cargo wasm
+
+private-key:
+	@if [ -z "$(mnemonic)" ]; then \
+		echo "Please provide a mnemonic phrase: make private-key mnemonic=\"...\""; \
+		exit 1; \
+	fi
+	@echo "$(mnemonic)"
+	@echo "evm_private_key:"
+	@cast wallet private-key "$(mnemonic)"
+	@echo "\ncosmos_private_key:"
+	@cast wallet private-key --mnemonic-derivation-path "m/44'/118'/0'/0/0" "$(mnemonic)"
 
 ci-build: optimize check
 	zip -jr wasm_codes.zip artifacts

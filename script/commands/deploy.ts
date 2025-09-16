@@ -1,6 +1,5 @@
 import { Command } from 'commander';
 
-import { MsgExecuteContract } from '@injectivelabs/sdk-ts';
 import { deployHook, deployIsm } from '../deploy';
 import { saveAgentConfig } from '../shared/agent';
 import { Client, config, getNetwork } from '../shared/config';
@@ -20,33 +19,9 @@ async function handleDeploy(_: object, cmd: Command) {
   ctx.deployments = ctx.deployments || {};
   ctx.deployments.core = await deployCore(opts, ctx, client);
   ctx.deployments.isms = await deployIsms(ctx, client);
-  // ctx.deployments.hooks = await deployHooks(opts, ctx, client);
-  // ctx.deployments.warp = { native: [], cw20: [] };
-  // ctx.deployments.test = await deployTest(opts, ctx, client);
-
-  // const updateMsg = MsgUpdateAdmin.fromJSON({
-  //   sender: client.injective_signer,
-  //   newAdmin: 'inj1ac6qpt57vhtfzdecd2an052elwgenwtxcn9chl',
-  //   contract: ctx.deployments.isms?.address!,
-  // });
-
-  const initMsg = MsgExecuteContract.fromJSON({
-    contractAddress: ctx.deployments.isms?.address!,
-    sender: client.injective_signer,
-    msg: {
-      ownable: {
-        init_ownership_transfer: {
-          next_owner: 'inj1ac6qpt57vhtfzdecd2an052elwgenwtxcn9chl'
-        }
-      }
-    }
-  })
-
-  const resp = await client.injective.broadcast({
-    msgs: initMsg,
-  });
-
-  console.log({resp});
+  ctx.deployments.hooks = await deployHooks(opts, ctx, client);
+  ctx.deployments.warp = { native: [], cw20: [] };
+  ctx.deployments.test = await deployTest(opts, ctx, client);
 
   if (!ctx.deployments.core?.mailbox)
     throw new Error('deployed Mailbox contract not found on context');
@@ -196,6 +171,9 @@ const deployTest = async (
 ): Promise<ContextDeployments['test']> => {
   const { hrp } = getNetwork(networkId);
 
+  if (!ctx.deployments.core?.mailbox)
+    throw new Error('deployed Mailbox contract not found on context');
+
   const log = (v: string) => console.log('[test]'.green, v);
   const preload = ctx.deployments.test;
   const deployment = preload || {};
@@ -205,6 +183,25 @@ const deployTest = async (
     (await deployContract(ctx, client, 'hpl_test_mock_msg_receiver', {
       hrp,
     }));
+  if (preload?.msg_receiver)
+    log(`${deployment.msg_receiver.type} already deployed`);
+
+  const xyz_verifier_init_msg = {
+    mailbox: ctx.deployments.core.mailbox.address,
+    owner: client.signer,
+    hyperlane_verification:
+      '000000000000000000000000dda50543892966c90c7f25ba69ff3cfd3b5084f6',
+  };
+  deployment.self_xyz_verifier =
+    preload?.self_xyz_verifier ||
+    (await deployContract(
+      ctx,
+      client,
+      'hpl_self_xyz_verifier',
+      xyz_verifier_init_msg,
+      1000,
+      client.signer,
+    ));
   if (preload?.msg_receiver)
     log(`${deployment.msg_receiver.type} already deployed`);
 

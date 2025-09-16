@@ -150,14 +150,9 @@ export type Config = {
   };
 };
 
-import { Network } from "@injectivelabs/networks";
-import { MsgBroadcasterWithPk } from '@injectivelabs/sdk-ts';
-
 export class Client {
   wasm: SigningCosmWasmClient;
   stargate: SigningStargateClient;
-  injective: MsgBroadcasterWithPk;
-  injective_signer: string;
   signer: string;
   signer_addr: string;
   signer_pubkey: string;
@@ -210,14 +205,6 @@ export async function getSigningClient(networkId: string): Promise<Client> {
 
   const gasPrice = GasPrice.fromString(`${gas.price}${gas.denom}`);
 
-  const injective = new MsgBroadcasterWithPk({
-    privateKey: signer,
-    network: Network.Mainnet
-  });
-
-  // TODO: figure out how to derive this
-  const injective_signer = "inj1xe7h6urta6mftjl8ncud2fv42wgdtdad8ackjm";
-
   const wasm = await SigningCosmWasmClient.connectWithSigner(
     endpoint.rpc,
     wallet,
@@ -235,8 +222,6 @@ export async function getSigningClient(networkId: string): Promise<Client> {
   return {
     wasm,
     stargate,
-    injective,
-    injective_signer,
     signer: account.address,
     signer_addr: Buffer.from(ethaddr).toString('hex'),
     signer_pubkey: Buffer.from(account.pubkey).toString('hex'),
